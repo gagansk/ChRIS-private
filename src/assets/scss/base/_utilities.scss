@@ -1,0 +1,31 @@
+/*
+*  File:            _utilities.scss
+*  Description:     This files holds styles for utility classes
+*                   
+*  Author:          ChRIS UI
+*/
+
+.capitalize{
+    text-transform: capitalize;
+}
+// Add a full width modal
+.fullwidth-modal{
+    margin: 0 auto;
+    min-height: 50vh;
+    min-width: 98vw;
+}
+
+.icon-mr{
+    margin-right: 5px;
+}
+
+.white-bg{
+    background: white;
+}
+.black-900{
+    color: $pf-color-black-900;
+}
+
+.float-right{
+    float:right;
+}

@@ -1,0 +1,136 @@
+/*
+*  File:            feed.scss
+*  Description:     This files holds styles specific for the Feed view page
+*  Author:          ChRIS UI
+*/
+
+
+@import '../../assets/scss/helpers/variables'; 
+.feed-info-block{
+    h1{
+        font-size: 	1.2rem;
+        margin: 0.65rem 0;
+    }
+    p{
+        margin-top: 0.3rem;
+    }
+    .pf-c-list.pf-m-inline li:not(:last-child){
+        margin-right: 2rem;
+    }
+    img{
+        margin-right:0.5rem;
+        max-width: 70px;
+        width: 90%;
+    }
+}
+.feed-view{
+    min-height: 25vh; // Temp for dev
+    >div{
+        color: #fff;
+    }
+    // Left side panel displaying feed tree
+    .feed-block{
+      background: $feed-block-background;
+    }
+    
+    // Right side panel to display node information
+    .node-block{
+        background: $node-block-background;
+        border-left: 3px solid $node-block-border;
+        font-size: $plugin-data-font-size;
+        div{
+            color: #fff;
+            label{
+                display:block;
+                font-size: $plugin-label-font-size;
+                
+            } 
+        }
+        .pf-l-grid{
+            margin-top: 1rem;
+        }
+        .btn-div{
+            margin-top: 0.5rem;
+            max-width: 200px;
+            button{
+                color: #fff;
+                font-size: $plugin-data-font-size;
+                margin-bottom: 0.5rem;
+                text-align: left;
+                outline-color: #fff;
+                svg{
+                    margin-right: 5px;
+                }
+                &:hover, &:focus{
+                    background: #fff;
+                    color: $node-block-background;
+                    &::after {
+                        border-color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+// Misc
+.svg-inline--fa{
+    margin-right: 5px;
+}
+
+// Tree Chart Section
+// ------------------------------
+.link {
+    fill:none;
+    marker-end: url(#end-arrow);
+    opacity: 0.8;
+    stroke: $tree-links-color; //007bba - active
+    stroke-width: 1px;
+}
+.nodelabel{
+    fill: $tree-node-backgound;
+    font-size: 0.75rem;
+}
+.nodegroup{
+    cursor: pointer;
+    fill: $tree-node-backgound;
+    &.active{
+        fill: $tree-node-active-backgound;
+        .nodelabel{
+            fill: $tree-node-active-backgound;
+        }
+    }
+}
+// For tree tooltip
+#tree, #pipelineTree{
+    position: relative;
+}
+.tooltip{
+    background: $tree-tooltip-background; // rgb(57, 63, 68); // 393f44
+    color: #fff;
+    font-size: 0.875rem;
+    min-height: 50px;
+    opacity: 0;
+    padding: 1rem;
+    position: absolute; 
+    transition: opacity 1s; 
+    transition-delay: 0.5s;
+    &::before{
+        background: $tree-tooltip-background;
+        content: "";
+        display: block;
+        height: $tree-tooltip-arrow-width;
+        left: 100px; 
+        position: absolute;
+        pointer-events: none;
+        top: 100%; //0
+        transform:translate(-50%, -50%) rotate(45deg);
+        width: $tree-tooltip-arrow-width;
+        
+    }
+}
+
+#pipelineTree{
+    .nodegroup{
+        cursor: default;
+    }
+}
