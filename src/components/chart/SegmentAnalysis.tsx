@@ -13,21 +13,23 @@ interface ComponentState {
 
 // csvData format [[segmentName1, LH1, RH1],[segmentName2, LH2, RH2]]
 const csvData = [
-  ["GSFrontToMargin", 30, 34],
-  ["GOrbital", -20, -16],
-  ["GTemporalMiddle", 10, 14],
-  ["SCentral", 40, 44],
-  ["SFrontSup", -15, -11],
-  ["STemporalInf", 25, 20]
+  ["GSFrontToMargin", 3.12, 3.4],
+  ["GOrbital", -2.0, -1.6],
+  ["GTemporalMiddle", 1.0, 1.4],
+  ["SCentral", 4.0, 4.4],
+  ["SFrontSup", -1.5, -1.1],
+  ["STemporalInf", 2.5, 2.0]
 ];
 
-const defaultLeftHemisphere = ["leftHemisphere", 30, -20, 25];
-const defaultRightHemisphere = ["rightHemisphere", 34, -16, 20];
+const defaultLeftHemisphere = ["leftHemisphere", 3.12, -2.0, 2.5];
+const defaultRightHemisphere = ["rightHemisphere", 3.4, -1.6, 2.0];
 const defaultChartData = [ defaultLeftHemisphere, defaultRightHemisphere ];
 const defaultSegments = ["GSFrontToMargin", "GOrbital", "STemporalInf"];
 
 const segments = ["GSFrontToMargin", "GOrbital", "GTemporalMiddle",
                     "SCentral", "SFrontSup", "STemporalInf"];
+const segmentValues = [[3.12, 3.4], [-2.0, -1.6], [1.0, 1.4],
+                          [4.0, 4.4], [-1.5, -1.1], [2.5, 2.0]];
 
 class SegmentAnalysis extends React.Component<ComponentProps, ComponentState> {
   constructor(props: ComponentProps) {
@@ -40,7 +42,31 @@ class SegmentAnalysis extends React.Component<ComponentProps, ComponentState> {
     this.changeData = this.changeData.bind(this);
   }
 
+  pickDefaultSegments(segmentOffSet: any) {
+
+  }
+
+  sortFunction(a: any, b: any) {
+    if (a[1] === b[1]) {
+      return 0;
+    } else {
+      return (a[1] < b[1]) ? -1 : 1;
+    }
+  }
+
+  calculateOffset() {
+    let segmentOffSet: any[] = [];
+    for ( let i = 0; i < segments.length; i++ ) {
+      segmentOffSet.push([segments[i], Math.abs(segmentValues[i][0]) +
+                                        Math.abs(segmentValues[i][1])]);
+    }
+    return segmentOffSet.sort(this.sortFunction);
+  }
+
   componentDidMount() {
+    //Calculate Offset
+    let result = this.calculateOffset();
+    console.log(result);
     this.callChart(defaultChartData, defaultSegments);
   }
 
