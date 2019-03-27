@@ -43,31 +43,47 @@ class SegmentAnalysis extends React.Component<ComponentProps, ComponentState> {
   }
 
   pickDefaultSegments(segmentOffSet: any) {
-
+    const defaultLeft : any[] = [];
+    const defaultRight : any[] = [];
+    let defaultSegmentation: any[] = [];
+    let segmentData;
+    defaultLeft.push("leftHemisphere");
+    defaultRight.push("rightHemisphere");
+    for ( let i = 0; i < 4; i++ ) {
+      segmentData = this.getSegmentData(segmentOffSet[i][0]);
+      if (segmentData) {
+        defaultSegmentation.push(segmentData[0]);
+        console.log("segmentData[1]", segmentData[1]);
+        defaultLeft.push(segmentData[1]);
+        defaultRight.push(segmentData[2]);
+      }
+    }
+    this.callChart([defaultLeft, defaultRight], defaultSegmentation);
   }
 
   sortFunction(a: any, b: any) {
     if (a[1] === b[1]) {
       return 0;
     } else {
-      return (a[1] < b[1]) ? -1 : 1;
+      return (a[1] < b[1]) ? 1 : -1;
     }
   }
 
   calculateOffset() {
     let segmentOffSet: any[] = [];
+    let result: any[] = [];
     for ( let i = 0; i < segments.length; i++ ) {
       segmentOffSet.push([segments[i], Math.abs(segmentValues[i][0]) +
                                         Math.abs(segmentValues[i][1])]);
     }
-    return segmentOffSet.sort(this.sortFunction);
+    result = segmentOffSet.sort(this.sortFunction);
+    this.pickDefaultSegments(result);
+    return result;
   }
 
   componentDidMount() {
     //Calculate Offset
-    let result = this.calculateOffset();
-    console.log(result);
-    this.callChart(defaultChartData, defaultSegments);
+    this.calculateOffset();
   }
 
   callChart(inputChart: any, segments: any) {
@@ -117,6 +133,7 @@ class SegmentAnalysis extends React.Component<ComponentProps, ComponentState> {
     // Parse for the leftHemisphereData and rightHemisphereData
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < filteredData.length; i++) {
+      console.log("filteredData[i][1]",filteredData[i][1]);
       leftHemisphereData.push(filteredData[i][1]);
       rightHemisphereData.push(filteredData[i][2]);
     }
